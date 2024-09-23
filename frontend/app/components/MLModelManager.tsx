@@ -18,36 +18,41 @@ const MLModelManager: React.FC = () => {
   const BACKEND_SERVER_HOST = '0.0.0.0';
   const BACKEND_SERVER_PORT = '8000'
   
-  useEffect(() => {
-    // Fetch models from API
-    const fetchModels = async () => {
-        setIsLoading(true);
-        try {
-            
-            const response = await fetch(`http://${BACKEND_SERVER_HOST}:${BACKEND_SERVER_PORT}/api/models`);
-            if (!response.ok) {
-                throw new Error('Failed to fetch models');
-            }
-            const data: MLModel[] = await response.json();
-            console.log("data", data);
-            setModels(data);
-            setError(null);
-        } catch (error) {
-            setError('Error fetching models. Please try again later.');
-            console.error('Error fetching models:', error);
-        } finally {
-            setIsLoading(false);
+  
+    
+const fetchModels = async () => {
+    setIsLoading(true);
+    try {
+        
+        const response = await fetch(`http://${BACKEND_SERVER_HOST}:${BACKEND_SERVER_PORT}/api/models`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch models');
         }
-    };
+        const data: MLModel[] = await response.json();
+        console.log("data", data);
+        setModels(data);
+        setError(null);
+    } catch (error) {
+        setError('Error fetching models. Please try again later.');
+        console.error('Error fetching models:', error);
+    } finally {
+        setIsLoading(false);
+    } 
+  }
 
+  useEffect(() => {
     fetchModels();
   }, []);
+
+  const handleRefresh = () => {
+    fetchModels();
+  }
 
   return (
     <div className={styles.container}>
       <div className={styles.actions}>
         <button className={styles.actionButton}>Upload ML Model</button>
-        <button className={styles.actionButton}>Refresh</button>
+        <button className={styles.actionButton} onClick={handleRefresh}>Refresh</button>
         <button className={styles.actionButton}>Filter</button>
         <button className={styles.actionButton}>Delete</button>
         
