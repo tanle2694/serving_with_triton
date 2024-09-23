@@ -48,6 +48,7 @@ class BackendBaseSettings(BaseSettings):
         "http://0.0.0.0:5173",
         "http://127.0.0.1:5173",  # Qwik docker port
         "http://127.0.0.1:5174",
+        "http://192.168.101.28:3000",
     ]
     ALLOWED_METHODS: list[str] = ["*"]
     ALLOWED_HEADERS: list[str] = ["*"]
@@ -59,6 +60,7 @@ class BackendBaseSettings(BaseSettings):
         case_sensitive: bool = True
         env_file: str = f"{str(ROOT_DIR)}/.env"
         validate_assignment: bool = True
+        extra='allow'
 
     @property
     def set_backend_app_attributes(self) -> dict[str, str | bool | None]:

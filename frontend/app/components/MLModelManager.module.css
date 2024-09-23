@@ -1,0 +1,70 @@
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 2rem auto;
+    font-family: Arial, sans-serif;
+  }
+  
+  .actions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 1rem;
+  }
+  
+  .actionButton, .actionSelect {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ccc;
+    background-color: #f8f8f8;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .searchContainer {
+    margin-bottom: 1rem;
+  }
+  
+  .searchInput {
+    width: 31%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    
+  }
+  
+  .modelTable {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .modelTable th, .modelTable td {
+    border: 1px solid #e0e0e0;
+    padding: 0.5rem;
+    text-align: left;
+  }
+  
+  .modelTable th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+  }
+  
+  .status {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  
+  .active {
+    color: #4caf50;
+  }
+  
+  .inactive {
+    color: #f44336;
+  }
+  
+  .pagination {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }

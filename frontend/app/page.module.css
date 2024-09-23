@@ -1,0 +1,41 @@
+.container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .navbar {
+    display: flex;
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 0 20px;
+  }
+  
+  .navItem {
+    padding: 15px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .navItem:hover, .navItem.active {
+    background-color: #e0e0e0;
+  }
+  
+  .icon, .homeIcon {
+    margin-right: 8px;
+    font-size: 18px;
+  }
+  
+  .homeIcon {
+    color: #1a73e8;
+  }
+  
+  .main {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  /* Retain any existing styles you had for other elements */

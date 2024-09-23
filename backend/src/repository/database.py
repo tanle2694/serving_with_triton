@@ -9,12 +9,12 @@ from sqlalchemy.pool import Pool as SQLAlchemyPool, QueuePool as SQLAlchemyQueue
 
 from src.config.manager import settings
 
-
+import loguru
 class AsyncDatabase:
     def __init__(self):
         self.postgres_uri: pydantic.PostgresDsn = pydantic.PostgresDsn(
-            url=f"{settings.DB_POSTGRES_SCHEMA}://{settings.DB_POSTGRES_USENRAME}:{settings.DB_POSTGRES_PASSWORD}@{settings.DB_POSTGRES_HOST}:{settings.DB_POSTGRES_PORT}/{settings.DB_POSTGRES_NAME}",
-            scheme=settings.DB_POSTGRES_SCHEMA,
+            url=f"{settings.DB_POSTGRES_SCHEMA}://{settings.DB_POSTGRES_USERNAME}:{settings.DB_POSTGRES_PASSWORD}@{settings.DB_POSTGRES_HOST}:{settings.DB_POSTGRES_PORT}/{settings.DB_POSTGRES_NAME}",
+            # scheme=settings.DB_POSTGRES_SCHEMA,
         )
         self.async_engine: SQLAlchemyAsyncEngine = create_sqlalchemy_async_engine(
             url=self.set_async_db_uri,
@@ -33,8 +33,9 @@ class AsyncDatabase:
 
             `postgresql://` => `postgresql+asyncpg://`
         """
+        loguru.logger.info(f"Setting async db uri: {self.postgres_uri}")
         return (
-            self.postgres_uri.replace("postgresql://", "postgresql+asyncpg://")
+            str(self.postgres_uri).replace("postgresql://", "postgresql+asyncpg://")
             if self.postgres_uri
             else self.postgres_uri
         )
