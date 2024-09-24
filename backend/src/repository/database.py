@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import (
     create_async_engine as create_sqlalchemy_async_engine,
 )
 from sqlalchemy.pool import Pool as SQLAlchemyPool, QueuePool as SQLAlchemyQueuePool
-
+from sqlalchemy.pool import AsyncAdaptedQueuePool as SQLAlchemyAsyncQueuePool
 from src.config.manager import settings
 
 import loguru
@@ -21,7 +21,7 @@ class AsyncDatabase:
             echo=settings.IS_DB_ECHO_LOG,
             pool_size=settings.DB_POOL_SIZE,
             max_overflow=settings.DB_POOL_OVERFLOW,
-            poolclass=SQLAlchemyQueuePool,
+            poolclass=SQLAlchemyAsyncQueuePool,
         )
         self.async_session: SQLAlchemyAsyncSession = SQLAlchemyAsyncSession(bind=self.async_engine)
         self.pool: SQLAlchemyPool = self.async_engine.pool
@@ -33,12 +33,16 @@ class AsyncDatabase:
 
             `postgresql://` => `postgresql+asyncpg://`
         """
-        loguru.logger.info(f"Setting async db uri: {self.postgres_uri}")
-        return (
+        async_db_uri = (
             str(self.postgres_uri).replace("postgresql://", "postgresql+asyncpg://")
             if self.postgres_uri
             else self.postgres_uri
+            
         )
+        self.postgres_uri = async_db_uri
+        loguru.logger.info(f"Setting async db uri: {self.postgres_uri}")
+        loguru.logger.info(f"Setting async db uri: {async_db_uri}")
+        return async_db_uri
 
 
 async_db: AsyncDatabase = AsyncDatabase()

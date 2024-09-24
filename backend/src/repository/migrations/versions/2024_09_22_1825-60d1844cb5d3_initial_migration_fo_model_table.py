@@ -25,7 +25,7 @@ def upgrade() -> None:
         sa.Column("name", sa.String(length=64), nullable=False),
         sa.Column("type", sa.String(length=64), nullable=False),
         sa.Column("description", sa.String(length=1024), nullable=True),
-        sa.Column("status", sa.String(length=64), nullable=False),
+        sa.Column("status", sa.String(length=64), nullable=True),
         sa.Column("last_active", sa.DateTime(timezone=True), nullable=True),
         sa.Column("created_at", sa.DateTime(timezone=True), server_default=sa.text("now()"), nullable=False),
         sa.Column("updated_at", sa.DateTime(timezone=True), nullable=True),

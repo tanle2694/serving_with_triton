@@ -16,11 +16,19 @@ class ModelCRUDRepository(BaseCRUDRepository):
         return query.scalars().all()
 
     async def create_model(self, model_create: ModelInCreate) -> Model:
-        stmt = sqlalchemy.insert(Model).values(
+        new_model = Model(
             name=model_create.name,
             type=model_create.type,
-            description=model_create.description,
-            path=model_create.model_path,
+            description=model_create.description
         )
-        await self.async_session.execute(statement=stmt)
-        return model_create
+        self.async_session.add(instance=new_model)
+        await self.async_session.commit()
+        await self.async_session.refresh(instance=new_model)
+        # stmt = sqlalchemy.insert(Model).values(
+        #     name=model_create.name,
+        #     type=model_create.type,
+        #     description=model_create.description            
+        # )
+
+        # model_created = await self.async_session.execute(statement=stmt)
+        return new_model
