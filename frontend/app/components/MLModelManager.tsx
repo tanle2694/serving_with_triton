@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './MLModelManager.module.css';
+import UploadMLModelModal from './UploadMLModelModal';
 
 interface MLModel {
   id: string;
@@ -17,10 +18,22 @@ const MLModelManager: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const BACKEND_SERVER_HOST = '0.0.0.0';
   const BACKEND_SERVER_PORT = '8000'
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   
+  const handleUploadClick = () => {
+    setIsUploadModalOpen(true);
+  }
+
+  const handleCloseUploadModal = () => {
+    setIsUploadModalOpen(false);
+  }
   
-    
-const fetchModels = async () => {
+  const handleUploadModel = async (modelData: any) => {
+    console.log("Uploading model: ", modelData);
+    await fetchModels();
+  }
+
+  const fetchModels = async () => {
     setIsLoading(true);
     try {
         
@@ -51,7 +64,7 @@ const fetchModels = async () => {
   return (
     <div className={styles.container}>
       <div className={styles.actions}>
-        <button className={styles.actionButton}>Upload ML Model</button>
+        <button className={styles.actionButton} onClick={handleUploadClick}>Upload ML Model</button>
         <button className={styles.actionButton} onClick={handleRefresh}>Refresh</button>
         <button className={styles.actionButton}>Filter</button>
         <button className={styles.actionButton}>Delete</button>
@@ -103,6 +116,11 @@ const fetchModels = async () => {
         
       )
       }
+    <UploadMLModelModal
+      isOpen={isUploadModalOpen}
+      onClose={handleCloseUploadModal}
+      onSubmit={handleUploadModel}
+    />
     </div>
   );
 };

@@ -1,0 +1,43 @@
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modalContent {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 80%;
+    max-width: 500px;
+  }
+  
+  .modalContent form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .modalContent input,
+  .modalContent textarea {
+    width: 100%;
+    padding: 5px;
+  }
+  
+  .modalActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .modalActions button {
+    padding: 5px 10px;
+    cursor: pointer;
+  }
