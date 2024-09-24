@@ -8,10 +8,11 @@ from sqlalchemy.ext.asyncio import AsyncEngine
 from sqlalchemy.pool import NullPool as SQLAlchemyNullPool
 
 from src.repository.base import Base
-from src.repository.database import async_db
+# from src.repository.database import async_db
 
 config = context.config
-config.set_main_option(name="sqlalchemy.url", value=str(async_db.set_async_db_uri))
+# config.set_main_option(name="sqlalchemy.url", value=str(async_db.set_async_db_uri))
+print(config.get_main_option("sqlalchemy.url"))
 target_metadata = Base.metadata
 
 if config.config_file_name is not None:
