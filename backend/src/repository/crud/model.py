@@ -8,6 +8,8 @@ from src.models.schemas.model import ModelInResponse, ModelInCreate
 from src.repository.crud.base import BaseCRUDRepository
 
 import loguru
+
+
 class ModelCRUDRepository(BaseCRUDRepository):
     async def read_models(self) -> typing.Sequence[Model]:
         stmt = sqlalchemy.select(Model)

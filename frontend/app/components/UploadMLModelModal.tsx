@@ -7,6 +7,12 @@ interface UploadMLModelModalProps {
     onUpload: (modelData: any) => void;
 }
 
+const MODEL_TYPES = [
+  'Tensorflow',
+  'PyTorch',
+  'Scikit-Learn'
+]
+
 const UploadMLModelModal: React.FC<UploadMLModelModalProps> = ({ isOpen, onClose, onUpload }) => {
     const [file, setFile] = useState<File | null>(null);
     const [name, setName] = useState('');
@@ -45,14 +51,26 @@ const UploadMLModelModal: React.FC<UploadMLModelModalProps> = ({ isOpen, onClose
             <div>
               <label htmlFor="name">Model Name:</label>
               <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} required />
-            </div>
-            <div>
-              <label htmlFor="type">Model Type:</label>
-              <input type="text" id="type" value={type} onChange={(e) => setType(e.target.value)} />
-            </div>
+            </div>            
             <div>
               <label htmlFor="description">Description:</label>
               <textarea id="description" value={description} onChange={(e) => setDescription(e.target.value)} />
+            </div>
+            <div>
+              <label htmlFor="type">Model Type:</label>
+              <select
+                id="type"
+                value={type}
+                onChange={(e) => setType(e.target.value)}
+                required              
+              >
+                <option value="">Select a type</option>
+                {MODEL_TYPES.map((modelType) => (
+                  <option key={modelType} value={modelType}>
+                    {modelType}
+                  </option>
+                ))}
+              </select>
             </div>
             <div className={styles.modalActions}>
               <button type="submit">Upload</button>

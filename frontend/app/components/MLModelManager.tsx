@@ -30,7 +30,27 @@ const MLModelManager: React.FC = () => {
   
   const handleUploadModel = async (modelData: any) => {
     console.log("Uploading model: ", modelData);
-    await fetchModels();
+    try {
+      const response = await fetch(`http://${BACKEND_SERVER_HOST}:${BACKEND_SERVER_PORT}/api/models/upload`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: modelData.name,
+          type: modelData.type,
+          description: modelData.description,          
+        })
+      });
+      if (!response.ok) {
+        throw new Error('Failed to upload model');
+      }    
+      await fetchModels();
+    } catch (error) {
+      setError('Error uploading model. Please try again later.');
+      console.error('Error uploading model:', error);
+    }
   }
 
   const fetchModels = async () => {
@@ -119,7 +139,7 @@ const MLModelManager: React.FC = () => {
     <UploadMLModelModal
       isOpen={isUploadModalOpen}
       onClose={handleCloseUploadModal}
-      onSubmit={handleUploadModel}
+      onUpload={handleUploadModel}
     />
     </div>
   );
